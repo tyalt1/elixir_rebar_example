@@ -59,28 +59,46 @@ defmodule ComplexMath do
 
     @doc "Lazy Sequence of prime numbers."
     def prime(start \\ 2) do
-      Stream.iterate(start, fn(n)-> n+1 end)
+      start
+      |> Stream.iterate(fn(n)-> n+1 end)
       |> Stream.filter(&Math.prime?/1)
     end
 
     @doc "Lazy Sequence of fibonacci numbers."
     def fib(f1 \\ 1, f2 \\ 1) do
-      Stream.iterate({f1,f2}, fn {x,y} -> {y,x+y} end)
+      {f1,f2}
+      |> Stream.iterate(fn {x,y} -> {y,x+y} end)
       |> Stream.map(fn {x,_} -> x end)
     end
   end
 
   defmodule Example do
+    import Integer, only: [is_even: 1]
     import Benchmark
 
     @doc "Shows off Pipe Operator. Returns the sum all even fibonacci numbers below 4 million."
     def pipe_example do
-      import Integer, only: [is_even: 1]
-
       Lazy.fib
       |> Stream.take_while(fn n -> n < 4_000_000 end)
       |> Stream.filter(&is_even/1)
       |> Enum.sum()
+    end
+
+    @doc "Same as calculation as pipe_example, but highlights Eager vs Lazy evaluation."
+    def lazy_example do
+      fun = fn(module) ->
+        Lazy.fib
+        |> module.take_while(fn n -> n < 4_000_000 end)
+        |> module.filter(&is_even/1)
+        |> Enum.sum()
+      end
+
+      bench "Eager example" do
+        fun.(Enum)
+      end
+      bench "Lazy example" do
+        fun.(Stream)
+      end
     end
 
     @doc "Shows off Task module (future)."

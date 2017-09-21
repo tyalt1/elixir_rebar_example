@@ -13,6 +13,34 @@ $ make docker
 # cd /code
 # make
 ```
+
+## Run
+
+In Erlang shell
+```
+$ rebar shell
+Erlang/OTP 20 [erts-9.0.3] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false]
+Eshell V9.0.3  (abort with ^G)
+1> 'Elixir.ComplexMath.Example':lazy_example().
+Eager example: Returned value 4613732 in 133.172 milliseconds
+Lazy example: Returned value 4613732 in 0.045 milliseconds
+4613732
+```
+
+In Elixir shell
+```
+$ iex
+Erlang/OTP 20 [erts-9.0.3] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false]
+Interactive Elixir (1.5.1) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> c "lib/complex_math.ex"
+[ComplexMath, ComplexMath.Example, ComplexMath.Lazy, ComplexMath.Math,
+ Benchmark]   
+iex(2)> ComplexMath.Example.lazy_example
+Eager example: Returned value 4613732 in 9.236 milliseconds
+Lazy example: Returned value 4613732 in 0.059 milliseconds
+4613732
+```
+
 ## Tour of Elixir
 
 Included Elixir code is meant to be a whirlwind tour of Elixir features.
