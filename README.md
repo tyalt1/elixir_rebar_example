@@ -1,4 +1,4 @@
-# elixir_example
+# elixir_rebar_example
 
 An example of how to build Elixir code in a rebar project.
 
