@@ -4,23 +4,17 @@
 %%%-------------------------------------------------------------------
 
 -module(elixir_example_app).
-
 -behaviour(application).
 
-%% Application callbacks
--export([start/2, stop/1]).
+% Callbacks
+-export(
+  [start/2
+  , stop/1
+  ]).
 
-%%====================================================================
-%% API
-%%====================================================================
+%% ----- API -----
+start(_StartType, _StartArgs) -> elixir_example_sup:start_link().
 
-start(_StartType, _StartArgs) ->
-    elixir_example_sup:start_link().
+stop(_State) -> ok.
 
-%%--------------------------------------------------------------------
-stop(_State) ->
-    ok.
-
-%%====================================================================
-%% Internal functions
-%%====================================================================
+%% ----- Internal functions -----
