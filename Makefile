@@ -11,7 +11,7 @@ compile:
 	@$(REBAR) compile
 
 clean:
-	rm -rf ebin/
+	rm -rf ebin/ _build/
 
 cleanall: clean
 	rm -rf deps/
