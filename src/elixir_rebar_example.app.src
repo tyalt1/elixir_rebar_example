@@ -1,0 +1,12 @@
+{application, elixir_rebar_example,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { elixir_rebar_example_app, []}},
+  {env, []}
+ ]}.
