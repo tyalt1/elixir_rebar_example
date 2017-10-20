@@ -1,20 +1,11 @@
 defmodule Benchmark do
   alias :timer, as: Timer
 
-  @doc """
-  Takes function with no arguments.
-  Returns tuple with time (in microseconds) and value returned.
-  """
-  @spec timed_call(function()) :: {pos_integer(), term()}
-  def timed_call(fun) do
-    Timer.tc(fun)
-  end
-
   @doc "Macro for logging benchmarks of function calls."
   defmacro bench(label \\ "", do: block) do
     quote do
       IO.write(unquote(label) <> ": ")
-      {time, val} = Benchmark.timed_call(fn -> unquote(block) end)
+      {time, val} = Timer.tc(fn -> unquote(block) end)
       IO.write("Returned value #{val} in #{time/1000} milliseconds\n")
       val
     end
@@ -86,18 +77,17 @@ defmodule ComplexMath do
 
     @doc "Same as calculation as pipe_example, but highlights Eager vs Lazy evaluation."
     def lazy_example do
-      fun = fn(module) ->
+      bench "Eager example" do
         Lazy.fib
-        |> module.take_while(fn n -> n < 4_000_000 end)
-        |> module.filter(&is_even/1)
+        |> Enum.take_while(fn n -> n < 4_000_000 end)
+        |> Enum.filter(&is_even/1)
         |> Enum.sum()
       end
-
-      bench "Eager example" do
-        fun.(Enum)
-      end
       bench "Lazy example" do
-        fun.(Stream)
+        Lazy.fib
+        |> Stream.take_while(fn n -> n < 4_000_000 end)
+        |> Stream.filter(&is_even/1)
+        |> Enum.sum()
       end
     end
 
