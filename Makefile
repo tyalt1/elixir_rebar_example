@@ -9,7 +9,7 @@ compile:
 	@$(REBAR) compile
 
 clean:
-	rebar3 clean
+	@$(REBAR) clean
 
 cleanall: clean
 	rm -rf _build/ _elixir_build/
