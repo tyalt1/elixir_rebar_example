@@ -1,20 +1,18 @@
-REBAR = rebar
+REBAR = rebar3
+WORKDIR = /code
 
-.PHONY: all compile clean
+.PHONY: all compile clean cleanall docker
 
-all: deps compile
-
-deps:
-	@$(REBAR) get-deps compile
+all: compile
 
 compile:
 	@$(REBAR) compile
 
 clean:
-	rm -rf ebin/ _build/
+	rebar3 clean
 
 cleanall: clean
-	rm -rf deps/
+	rm -rf _build/ _elixir_build/
 
 docker:
-	docker run -it --rm -v `pwd`:/code elixir /bin/bash
+	-docker run -it --rm -v `pwd`:$(WORKDIR) -w $(WORKDIR) elixir /bin/bash
