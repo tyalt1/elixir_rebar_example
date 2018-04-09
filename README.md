@@ -17,7 +17,7 @@ $ make docker
 
 In Erlang shell
 ```
-$ rebar shell
+$ rebar3 shell
 Erlang/OTP 20 [erts-9.0.3] [source] [64-bit] [smp:4:4] [ds:4:4:10] [async-threads:10] [hipe] [kernel-poll:false]
 Eshell V9.0.3  (abort with ^G)
 1> 'Elixir.ComplexMath.Example':lazy_example().
